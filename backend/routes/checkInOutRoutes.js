@@ -31,6 +31,30 @@ router.get('/pending', async (req, res) => {
   }
 });
 
+// Get Approved Check-In/Check-Out Requests for Security
+router.get('/checkIn', async (req, res) => {
+  try {
+    const requests = await CheckInOut.find({ 
+      status: 'approved' // Match status 'approved'
+    }).populate('employeeId requestBy ApprovedBy');
+    res.json(requests);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get Checked-In Check-In/Check-Out Requests for Security
+router.get('/checkedIn', async (req, res) => {
+  try {
+    const requests = await CheckInOut.find({ 
+      status: 'checked-in' // Match status 'checked-in'
+    }).populate('employeeId requestBy ApprovedBy');
+    res.json(requests);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Process Check-In/Check-Out Request (Security)
 router.put('/:id', async (req, res) => {
   try {

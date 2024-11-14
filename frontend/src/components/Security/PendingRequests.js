@@ -9,7 +9,6 @@ const PendingRequests = () => {
             try {
                 const response = await api.get('/checkInOut/pending');
                 setRequests(response.data);
-                console.log(requests)
             } catch (error) {
                 console.error('Error fetching pending requests:', error);
             }

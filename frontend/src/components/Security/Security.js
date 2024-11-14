@@ -11,11 +11,11 @@ const TabsContainer = () => {
             case 'requested':
                 return <PendingRequests />;
             case 'check-in':
-                return (<div>Check-IN</div>)
-                // return <CheckInRequests />;
+                // return (<div>Check-IN</div>)
+                return <CheckInRequests />;
             case 'check-out':
-                return (<div>Check-OUT</div>)
-                // return <CheckOutRequests />;
+                // return (<div>Check-OUT</div>)
+                return <CheckOutRequests />;
             default:
                 return null;
         }
