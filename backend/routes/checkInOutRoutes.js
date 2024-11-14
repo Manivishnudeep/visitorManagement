@@ -22,7 +22,9 @@ router.post('/', async (req, res) => {
 // Get Pending Check-In/Check-Out Requests for Security
 router.get('/pending', async (req, res) => {
   try {
-    const requests = await CheckInOut.find({ status: 'pending' }).populate('employeeId requestBy ApprovedBy');
+    const requests = await CheckInOut.find({ 
+      status: { $in: ['pending', 'rejected'] } // Match status 'pending' or 'rejected'
+    }).populate('employeeId requestBy ApprovedBy');
     res.json(requests);
   } catch (error) {
     res.status(500).json({ message: error.message });
