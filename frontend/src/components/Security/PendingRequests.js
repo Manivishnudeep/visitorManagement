@@ -15,7 +15,7 @@ const PendingRequests = () => {
         };
 
         fetchPendingRequests();
-    }, []);
+    }, [requests]);
 
     return (
         <div className="container mt-4">

@@ -23,6 +23,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get Employee by employeeId
+router.get('/:id', async (req, res) => {
+  try {
+    const employeeId=req.params.id
+    const employees = await Employee.findOne({employeeId});
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Update Employee
 router.put('/:id', async (req, res) => {
   try {

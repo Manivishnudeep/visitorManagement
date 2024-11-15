@@ -5,12 +5,13 @@ const CheckInOut = require('../models/CheckInOut');
 // Create Check-In/Check-Out Request (Security)
 router.post('/', async (req, res) => {
   try {
-    const { employeeId, requestType } = req.body;
+    const { employeeId, requestType, purposeOfVisit = 'General' } = req.body;
     const checkInOut = new CheckInOut({
       employeeId,
       requestType,
       status: 'pending',
       requestBy: req.user.id,  // User initiating the request
+      purposeOfVisit
     });
     await checkInOut.save();
     res.status(201).json(checkInOut);
