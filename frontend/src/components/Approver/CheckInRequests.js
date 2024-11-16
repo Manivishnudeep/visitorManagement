@@ -19,15 +19,15 @@ const CheckInRequests = () => {
     }, [checkInRequests]);
 
     const handleRowClick = (request) => {
-        setSelectedRequest(request); // Open the modal with the selected request
+        setSelectedRequest(request);
     };
 
     const handleApprove = async () => {
         if (selectedRequest) {
             try {
                 await api.put(`/approver/${selectedRequest._id}`, { status: 'approved' });
-                setCheckInRequests(checkInRequests.map(req => req._id === selectedRequest._id ? { ...req, status: 'approved' } : req));
-                setSelectedRequest(null); // Close the modal
+                // setCheckInRequests(checkInRequests.map(req => req._id === selectedRequest._id ? { ...req, status: 'approved' } : req));
+                setSelectedRequest(null);
             } catch (error) {
                 console.error('Error approving request:', error);
             }
@@ -38,8 +38,8 @@ const CheckInRequests = () => {
         if (selectedRequest) {
             try {
                 await api.put(`/approver/${selectedRequest._id}`, { status: 'rejected' });
-                setCheckInRequests(checkInRequests.map(req => req._id === selectedRequest._id ? { ...req, status: 'rejected' } : req));
-                setSelectedRequest(null); // Close the modal
+                // setCheckInRequests(checkInRequests.map(req => req._id === selectedRequest._id ? { ...req, status: 'rejected' } : req));
+                setSelectedRequest(null); 
             } catch (error) {
                 console.error('Error rejecting request:', error);
             }

@@ -17,6 +17,14 @@ const CheckInRequests = () => {
         fetchCheckInRequests();
     }, [checkInRequests]);
 
+    const handleCheckIn=async(request)=>{
+        try {
+            await api.put(`/checkInOut/${request._id}`)
+        } catch (error) {
+            console.error('Error approving request:', error);
+        }
+    }
+
     return (
         <div className="container mt-4">
             <h3 className="mb-4">Check-In Requests</h3>
@@ -38,7 +46,8 @@ const CheckInRequests = () => {
                             <td>{request.requestType}</td>
                             <td>{request.status}</td>
                             <td>
-                                <button className="btn btn-light text-primary d-flex align-items-center gap-2 rounded">
+                                <button className="btn btn-light text-primary d-flex align-items-center gap-2 rounded"
+                                onClick={()=>handleCheckIn(request)}>
                                     <i className="bi bi-box-arrow-in-right"></i> Check-In
                                 </button>
                             </td>

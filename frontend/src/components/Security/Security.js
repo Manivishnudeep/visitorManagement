@@ -10,7 +10,6 @@ const TabsContainer = () => {
     const [activeTab, setActiveTab] = useState('requested');
     const [showModal, setShowModal] = useState(false);
     const [employeeId, setEmployeeId] = useState('');
-    const [requestType, setRequestType] = useState('check-in');
     const [purposeOfVisit, setpurposeOfVisit] = useState('');
 
     const handleShowModal = () => setShowModal(true);
@@ -18,7 +17,6 @@ const TabsContainer = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setEmployeeId('');
-        setRequestType('check-in');
     };
 
     const handleSignOut = () => {
@@ -39,8 +37,7 @@ const TabsContainer = () => {
     const handleCreateRequest = async () => {
         const _id=await fetchEmployeeData(employeeId)
         const requestData = {
-            employeeId:_id,
-            requestType,
+            employeeId:_id
         };
         
         try {
@@ -115,7 +112,7 @@ const TabsContainer = () => {
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">Creating Check-In/Check-Out Request</h5>
+                                <h5 className="modal-title">Creating Check-In Request</h5>
                                 <button type="button" className="close" aria-label="Close" onClick={handleCloseModal}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -131,18 +128,6 @@ const TabsContainer = () => {
                                             value={employeeId}
                                             onChange={(e) => setEmployeeId(e.target.value)}
                                         />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="requestType">Request Type</label>
-                                        <select
-                                            className="form-control"
-                                            id="requestType"
-                                            value={requestType}
-                                            onChange={(e) => setRequestType(e.target.value)}
-                                        >
-                                            <option value="check-in">Check-In</option>
-                                            <option value="check-out">Check-Out</option>
-                                        </select>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="purposeOfVisit">Purpose Of Visit</label>

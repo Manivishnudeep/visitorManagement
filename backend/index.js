@@ -20,7 +20,7 @@ app.use(express.json());
 
 
 app.use('/api/users', userRoutes);
-app.use('/api/employees',authMiddleware('security'), employeeRoutes);
+app.use('/api/employees', employeeRoutes);
 app.use('/api/checkInOut',authMiddleware('security'),checkInOutRoutes);
 app.use('/api/approver',authMiddleware('approver'),approverRoutes);
 app.use('/api/history',authMiddleware('security'),historyRoutes);
