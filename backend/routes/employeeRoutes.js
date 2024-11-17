@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get Employee by employeeId
+// Get Employee by employeeId(not _id)
 router.get('/:id', async (req, res) => {
   try {
     const employeeId=req.params.id

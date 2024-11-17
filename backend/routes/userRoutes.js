@@ -13,12 +13,11 @@ router.post('/register', async (req, res) => {
   }
 
   try {
-    // Check if the username already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: 'Username already exists.' });
     }
-    // Hash the password and create a new user
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, password: hashedPassword, role });
     await newUser.save();
@@ -37,7 +36,7 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
-    // Generate JWT
+    
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token, role: user.role });
   } catch (error) {

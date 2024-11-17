@@ -6,7 +6,7 @@ const Signup = () => {
   const Navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('security'); // or 'approver'
+  const [role, setRole] = useState('security');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {

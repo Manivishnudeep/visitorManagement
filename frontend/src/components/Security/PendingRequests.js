@@ -15,7 +15,7 @@ const PendingRequests = () => {
         };
 
         fetchPendingRequests();
-    }, [requests]);
+    }, []);
 
     return (
         <div className="container mt-4">
@@ -26,6 +26,7 @@ const PendingRequests = () => {
                         <th scope="col">S.No.</th>
                         <th scope="col">Employee Name</th>
                         <th scope="col">Request Type</th>
+                        <th scope='col'>Purpose of Visit</th>
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
@@ -35,6 +36,7 @@ const PendingRequests = () => {
                             <td>{index + 1}</td>
                             <td>{request.employeeId.name}</td>
                             <td>{request.requestType}</td>
+                            <td>{request.purposeOfVisit}</td>
                             <td className={request.status === 'rejected' ? 'text-danger' : ''}>{request.status}</td>
                         </tr>
                     ))}

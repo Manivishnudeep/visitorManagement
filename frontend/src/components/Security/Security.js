@@ -17,6 +17,7 @@ const TabsContainer = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         setEmployeeId('');
+        setpurposeOfVisit('');
     };
 
     const handleSignOut = () => {
@@ -37,13 +38,13 @@ const TabsContainer = () => {
     const handleCreateRequest = async () => {
         const _id=await fetchEmployeeData(employeeId)
         const requestData = {
-            employeeId:_id
+            employeeId:_id,
+            purposeOfVisit
         };
         
         try {
             const response = await api.post('/checkInOut', requestData);
             if (response.status === 200 || response.status === 201) {
-                // alert('Request created successfully');
                 handleCloseModal();
             } else {
                 alert('Failed to create request');

@@ -6,20 +6,19 @@ import Login from "./components/Auth/Login";
 import Employees from "./components/History/Employees";
 import Security from "./components/Security/Security";
 import Approver from "./components/Approver/Approver";
+import EmployeeHistory from "./components/History/EmployeeHistory";
 
-// Utility function to decode JWT and get role
 const getRoleFromToken = () => {
   const token = localStorage.getItem("token");
   if (!token) return null;
   try {
-    const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT payload
-    return payload.role; // Assuming the role is stored in the payload
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.role;
   } catch (e) {
     return null;
   }
 };
 
-// Higher Order Component for Protected Routes
 const ProtectedRoute = ({ role, children }) => {
   const userRole = getRoleFromToken();
   if (!userRole) {
@@ -37,6 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/employees" element={<Employees />} />
+        <Route path="/employee-history/:employeeId" element={<EmployeeHistory />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route

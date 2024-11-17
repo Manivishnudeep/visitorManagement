@@ -23,7 +23,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/employees', employeeRoutes);
 app.use('/api/checkInOut',authMiddleware('security'),checkInOutRoutes);
 app.use('/api/approver',authMiddleware('approver'),approverRoutes);
-app.use('/api/history',authMiddleware('security'),historyRoutes);
+app.use('/api/history',historyRoutes);
 
 
 const PORT = process.env.PORT || 5000;

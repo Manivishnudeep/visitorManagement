@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 const Employees = () => {
+    const Navigate=useNavigate();
     const [employees, setEmployees] = useState([]);
-    const [editingEmployeeId, setEditingEmployeeId] = useState(null); // ID of the employee being edited
-    const [editName, setEditName] = useState(''); // Name being edited
+    const [editingEmployeeId, setEditingEmployeeId] = useState(null);
+    const [editName, setEditName] = useState('');
 
-    // For Add User Modal
-    const [showModal, setShowModal] = useState(false);  // Modal visibility state
+    const [showModal, setShowModal] = useState(false);
     const [newEmployeeName, setNewEmployeeName] = useState('');
     const [newEmployeeId, setNewEmployeeId] = useState('');
 
     useEffect(() => {
-        // Fetch all employees
         const fetchEmployees = async () => {
             try {
                 const response = await api.get('/employees');
@@ -26,13 +25,11 @@ const Employees = () => {
         fetchEmployees();
     }, []);
 
-    // Handle edit button click
     const handleEdit = (employee) => {
         setEditingEmployeeId(employee.employeeId);
         setEditName(employee.name);
     };
 
-    // Handle save button click
     const handleSave = async (employee) => {
         try {
             await api.put(`/employees/${employee._id}`, { name: editName });
@@ -41,13 +38,12 @@ const Employees = () => {
                     emp.employeeId === employee.employeeId ? { ...emp, name: editName } : emp
                 )
             );
-            setEditingEmployeeId(null); // Exit editing mode
+            setEditingEmployeeId(null);
         } catch (error) {
             console.error('Error saving employee:', error);
         }
     };
 
-    // Handle delete button click
     const handleDelete = async (employee) => {
         try {
             await api.delete(`/employees/${employee._id}`);
@@ -68,12 +64,16 @@ const Employees = () => {
             };
             const response = await api.post('/employees', newEmployee);
             setEmployees((prevEmployees) => [...prevEmployees, response.data]);
-            setShowModal(false); // Close modal after adding
+            setShowModal(false);
             setNewEmployeeName('');
             setNewEmployeeId('');
         } catch (error) {
             console.error('Error adding employee:', error);
         }
+    };
+
+    const handleRowClick = (employeeId) => {
+        Navigate(`/employee-history/${employeeId}`);
     };
 
     return (
@@ -97,7 +97,6 @@ const Employees = () => {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Employee List</h2>
 
-                    {/* Add User Button */}
                     <button
                         className="btn btn-primary"
                         onClick={() => setShowModal(true)}
@@ -106,7 +105,6 @@ const Employees = () => {
                     </button>
                 </div>
 
-                {/* Employees Table */}
                 <table className="table table-bordered table-hover">
                     <thead className="thead-dark">
                         <tr className="table-primary">
@@ -118,7 +116,7 @@ const Employees = () => {
                     </thead>
                     <tbody>
                         {employees.map((employee, index) => (
-                            <tr key={employee.employeeId}>
+                            <tr key={employee.employeeId} onClick={() => handleRowClick(employee._id)}>
                                 <td>{index + 1}</td>
                                 <td>
                                     {editingEmployeeId === employee.employeeId ? (
@@ -163,7 +161,6 @@ const Employees = () => {
                     </tbody>
                 </table>
 
-                {/* Modal for Adding Employee */}
                 {showModal && (
                     <div className="modal show" style={{ display: 'block' }} onClick={() => setShowModal(false)}>
                         <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>

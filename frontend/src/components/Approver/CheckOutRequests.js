@@ -3,7 +3,8 @@ import api from '../../services/api';
 
 const CheckInRequests = () => {
     const [CheckOutRequests, setCheckInRequests] = useState([]);
-    const [selectedRequest, setSelectedRequest] = useState(null); // Track the selected request for the popup
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         const fetchCheckInRequests = async () => {
@@ -16,7 +17,7 @@ const CheckInRequests = () => {
         };
 
         fetchCheckInRequests();
-    }, [CheckOutRequests]);
+    }, [reload]);
 
     const handleRowClick = (request) => {
         setSelectedRequest(request); // Open the modal with the selected request
@@ -26,8 +27,8 @@ const CheckInRequests = () => {
         if (selectedRequest) {
             try {
                 await api.put(`/approver/${selectedRequest._id}`, { status: 'approved' });
-                setCheckInRequests(CheckOutRequests.map(req => req._id === selectedRequest._id ? { ...req, status: 'approved' } : req));
-                setSelectedRequest(null); // Close the modal
+                setReload(!reload)
+                setSelectedRequest(null);
             } catch (error) {
                 console.error('Error approving request:', error);
             }
@@ -38,8 +39,8 @@ const CheckInRequests = () => {
         if (selectedRequest) {
             try {
                 await api.put(`/approver/${selectedRequest._id}`, { status: 'rejected' });
-                setCheckInRequests(CheckOutRequests.map(req => req._id === selectedRequest._id ? { ...req, status: 'rejected' } : req));
-                setSelectedRequest(null); // Close the modal
+                setReload(!reload);
+                setSelectedRequest(null);
             } catch (error) {
                 console.error('Error rejecting request:', error);
             }
@@ -55,6 +56,7 @@ const CheckInRequests = () => {
                         <th scope="col">S.No.</th>
                         <th scope="col">Employee Name</th>
                         <th scope="col">Request Type</th>
+                        <th scope='col'>Purpose of Visit</th>
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
@@ -68,6 +70,7 @@ const CheckInRequests = () => {
                             <td>{index + 1}</td>
                             <td>{request.employeeId.name}</td>
                             <td>{request.requestType}</td>
+                            <td>{request.purposeOfVisit}</td>
                             <td>{request.status}</td>
                         </tr>
                     ))}
