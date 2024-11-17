@@ -82,7 +82,7 @@ The frontend is implemented using React.js and provides the following screens:
    - Employee table with CRUD operations.
    - Displays all requests made by a specific employee upon selection.
    - ![History Employee Table](./ScreenShots/History_Page1.png)
-   - ![History of Specific Employee](./ScreenShots//History_Specific_Employee.png)
+   - ![History of Specific Employee](./ScreenShots//History_Specific_EMployee.png)
 
 ---
 
